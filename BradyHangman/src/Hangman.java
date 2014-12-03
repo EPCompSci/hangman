@@ -20,7 +20,7 @@ import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class Hangman extends JPanel implements KeyListener, ActionListener {
-
+	//hmmmm
 	public static ArrayList<Integer[]> drawHangman = new ArrayList<Integer[]>();
 	private boolean startGame = true;
 	private boolean playing = false;
