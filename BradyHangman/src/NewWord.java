@@ -1,3 +1,4 @@
+//Gets a new random word from the word.txt file
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

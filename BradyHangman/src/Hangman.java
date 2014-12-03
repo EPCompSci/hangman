@@ -1,3 +1,4 @@
+//Hangman game panel. Runner is HangmanRunner
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;

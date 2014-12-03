@@ -1,4 +1,5 @@
-
+//Draws text at the center of the screen. Also can be used to store the x value
+//of where text is centered
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
