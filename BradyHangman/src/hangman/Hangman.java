@@ -1,4 +1,5 @@
-//Hangman game panel. Runner is HangmanRunner
+package hangman;
+//New hangman Game!!!
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -19,9 +20,11 @@ import java.util.Scanner;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import utilityClasses.*;
+
 @SuppressWarnings("serial")
 public class Hangman extends JPanel implements KeyListener, ActionListener {
-	//ggg
+
 	public static ArrayList<Integer[]> drawHangman = new ArrayList<Integer[]>();
 	private boolean startGame = true;
 	private boolean playing = false;
@@ -45,6 +48,7 @@ public class Hangman extends JPanel implements KeyListener, ActionListener {
 	private int pIndex = 0;
 
 	private boolean win;
+	private ScoreInfo scores = new ScoreInfo("hangman");
 	
 	private Color background = Color.BLACK;
 	
@@ -52,11 +56,16 @@ public class Hangman extends JPanel implements KeyListener, ActionListener {
 	private Color sideHang = Color.WHITE;
 	private Color bottomHang = Color.WHITE;
 	
-	private Color head = Color.RED;
-	private Color chest = Color.GREEN;
-	private Color arms = Color.RED;
-	private Color legs = Color.RED;
-	private Color shoulders = Color.GREEN;
+//	private Color head = Color.RED;
+//	private Color chest = Color.GREEN;
+//	private Color arms = Color.RED;
+//	private Color legs = Color.RED;
+//	private Color shoulders = Color.GREEN;
+	private Color head = Color.WHITE;
+	private Color chest = Color.WHITE;
+	private Color arms = Color.WHITE;
+	private Color legs = Color.WHITE;
+	private Color shoulders = Color.WHITE;
 	private Color addedLimb = Color.WHITE;
 	private Color[] body = {legs, legs, arms, shoulders, arms, shoulders, chest, head};
 	
@@ -89,90 +98,6 @@ public class Hangman extends JPanel implements KeyListener, ActionListener {
 		Timer timer = new Timer((int) (1000 / 60), this);
 		timer.start();
 
-	}
-	
-	public ArrayList<String[]> getScores() throws FileNotFoundException {
-		
-		Scanner scoreContents = new Scanner(new File("scores.txt"));
-		
-		ArrayList<Integer> scores = new ArrayList<Integer>();
-		
-		while (scoreContents.hasNext()) {
-			scores.add(Integer.parseInt(scoreContents.next()));	
-		}
-		
-		Scanner peopleContents = new Scanner(new File("people.txt"));
-		
-		ArrayList<String> people = new ArrayList<String>();
-				
-		while (peopleContents.hasNext()) {
-			
-			people.add(peopleContents.next());
-		}
-		
-		
-		ArrayList<String[]> results = new ArrayList<String[]>();
-		
-		for (int i = 0; i < people.size(); i++) {
-			String[] hs = {scores.get(i).toString(), people.get(i)};
-			results.add(hs);
-		}
-		
-		scoreContents.close();
-		peopleContents.close();
-		
-		pIndex = people.indexOf(pName);
-		//pName = "";
-		
-		return results;
-		
-		
-	}
-	
-	public void setScores() throws IOException {
-		
-		Scanner scoreContents = new Scanner(new File("scores.txt"));
-		
-		ArrayList<Integer> scores = new ArrayList<Integer>();
-		
-		int score = wrongs.size();
-		while (scoreContents.hasNext()) {
-			scores.add(Integer.parseInt(scoreContents.next()));
-			
-		}
-		scores.add(score);
-	
-		/////////////////////////////////////////////////////////////
-		Scanner peopleContents = new Scanner(new File("people.txt"));
-		
-		ArrayList<String> people = new ArrayList<String>();
-		
-		String person = pName;
-		
-		while (peopleContents.hasNext()) {
-			
-			people.add(peopleContents.next());
-		}
-		people.add(person);
-		
-		ArrayList<String[]> results = scoreOrder(scores, people);
-		PrintWriter scoreWriter1 = new PrintWriter(new FileWriter("scores.txt"));
-		PrintWriter peopleWriter1 = new PrintWriter(new FileWriter("people.txt"));
-		
-		for (String[] sp : results) {
-			
-			scoreWriter1.println(sp[0]);
-			peopleWriter1.println(sp[1]);
-			
-		}
-		
-		peopleWriter1.flush();
-		scoreWriter1.flush();
-		peopleWriter1.close();
-		scoreWriter1.close();
-		scoreContents.close();
-		peopleContents.close();
-		
 	}
 	
 	public ArrayList<String[]> scoreOrder(ArrayList<Integer> scores, ArrayList<String> people) {
@@ -410,8 +335,7 @@ public class Hangman extends JPanel implements KeyListener, ActionListener {
 //			}
 		} else if (highScores) {
 			
-			try {
-				ArrayList<String[]> results = getScores();
+				ArrayList<String[]> results = scores.getScores();
 				pName = "";
 				g.setFont(new Font("Joystix", Font.BOLD, 20));
 				int i = 0;
@@ -444,18 +368,6 @@ public class Hangman extends JPanel implements KeyListener, ActionListener {
 					l++;
 					r++;
 				}
-				
-				
-				
-				
-				
-				
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
 		}
 
 	}
@@ -605,11 +517,9 @@ public class Hangman extends JPanel implements KeyListener, ActionListener {
 				nameEnter = false;
 				highScores = true;
 //				endGame = true;
-				try {
-					setScores();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}	
+				
+					scores.setScores(wrongs.size(), pName);
+					
 			} else if (highScores) {
 				
 				highScores = false;

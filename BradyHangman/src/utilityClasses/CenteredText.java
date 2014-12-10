@@ -1,5 +1,4 @@
-//Draws text at the center of the screen. Also can be used to store the x value
-//of where text is centered
+package utilityClasses;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -25,6 +24,18 @@ public class CenteredText {
 		
 		this.x = (width - textWidth)/2;
 		this.y = (height - textHeight)/2;
+		
+		
+	}
+	
+public CenteredText(String text, int width, int height, Graphics g, boolean test) {
+		
+		FontMetrics fontInfo = g.getFontMetrics();
+		int textWidth = fontInfo.stringWidth(text);
+		int textHeight = fontInfo.getHeight();
+		
+		this.x = (width - textWidth)/2;
+		this.y = height - (height - textHeight)/2 - 5;
 		
 		
 	}

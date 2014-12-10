@@ -1,4 +1,4 @@
-//Runs Hangman
+package hangman;
 import java.awt.BorderLayout;
 import java.io.FileNotFoundException;
 
